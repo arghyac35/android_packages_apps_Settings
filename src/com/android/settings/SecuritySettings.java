@@ -122,6 +122,8 @@ public class SecuritySettings extends SettingsPreferenceFragment
     private static final int PASSWORD_VISIBLE = 1;
     private static final int PASSWORD_INVISIBLE = 0;
 
+    private static final String FINGERPRINT_VIB = "fingerprint_success_vib";
+
     // These switch preferences need special handling since they're not all stored in Settings.
     private static final String SWITCH_PREFERENCE_KEYS[] = {
             KEY_SHOW_PASSWORD, KEY_TOGGLE_INSTALL_APPLICATIONS, KEY_UNIFICATION,
@@ -145,6 +147,8 @@ public class SecuritySettings extends SettingsPreferenceFragment
     private SwitchPreference mUnifyProfile;
 
     private SwitchPreference mShowPassword;
+
+    private SwitchPreference mFingerprintVib;
 
     private KeyStore mKeyStore;
     private RestrictedPreference mResetCredentials;
@@ -384,6 +388,19 @@ public class SecuritySettings extends SettingsPreferenceFragment
                 Settings.System.LOCK_TO_APP_ENABLED, 0) != 0) {
             root.findPreference(KEY_SCREEN_PINNING).setSummary(
                     getResources().getString(R.string.switch_on_text));
+        }
+
+        FingerprintManager fpm =
+                (FingerprintManager) getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
+        mFingerprintVib = (SwitchPreference) findPreference(FINGERPRINT_VIB);
+        if (mFingerprintVib !=null) {
+            if (fpm != null && fpm.isHardwareDetected()){
+                mFingerprintVib.setChecked((Settings.System.getInt(getContentResolver(),
+                        Settings.System.FINGERPRINT_SUCCESS_VIB, 1) == 1));
+                mFingerprintVib.setOnPreferenceChangeListener(this);
+            } else {
+                securityCategory.removePreference(mFingerprintVib);
+            }
         }
 
         // Show password
@@ -825,6 +842,9 @@ public class SecuritySettings extends SettingsPreferenceFragment
             Settings.System.putInt(getContentResolver(), Settings.System.TEXT_SHOW_PASSWORD,
                     ((Boolean) value) ? 1 : 0);
             lockPatternUtils.setVisiblePasswordEnabled((Boolean) value, MY_USER_ID);
+        } else if (FINGERPRINT_VIB.equals(key)) {
+            Settings.System.putInt(getContentResolver(), Settings.System.FINGERPRINT_SUCCESS_VIB,
+                    ((Boolean) value) ? 1 : 0);
         } else if (KEY_TOGGLE_INSTALL_APPLICATIONS.equals(key)) {
             if ((Boolean) value) {
                 mToggleAppInstallation.setChecked(false);
