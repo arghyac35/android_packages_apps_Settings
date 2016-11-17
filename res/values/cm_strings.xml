@@ -513,4 +513,9 @@
     <!-- Burn in protection -->
     <string name="burnin_protection_title">Display burn-in protection</string>
     <string name="burnin_protection_summary">Periodically move items that are permanently shown on screen to avoid excessive screen wear in that area</string>
+
+    <!-- Quick unlock -->
+    <string name="unlock_quick_unlock_control_title">Quick unlock</string>
+    <string name="unlock_quick_unlock_control_summary">Unlock automatically when the correct PIN is entered\nNote: will only work for 4 digit PIN !</string>
+
 </resources>
