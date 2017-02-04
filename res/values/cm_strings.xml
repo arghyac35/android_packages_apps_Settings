@@ -541,4 +541,7 @@
 
     <string name="dashboard_title">Dashboard</string>
     <string name="two_columns_title">Two columns</string>
+
+    <string name="magisk_title">Magisk Manager</string>
+    <string name="magisk_summary">Control modules and settings</string>
 </resources>
