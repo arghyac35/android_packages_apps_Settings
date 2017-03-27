@@ -16,5 +16,5 @@
 -->
 
 <resources>
-    <style name="Theme.SmartBar.Dialog" parent="@*android:style/Theme.Material.Light.Dialog.Alert" />
+    <style name="Theme.SmartBar.Dialog" parent="@*android:style/Theme.DeviceDefault.Light.Dialog.Alert" />
 </resources>
