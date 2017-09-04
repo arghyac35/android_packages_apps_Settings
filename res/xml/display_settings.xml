@@ -32,10 +32,18 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/dashboard_title">
 
+        <com.android.settings.preference.SystemSettingSwitchPreference
+                android:key="two_columns"
+                android:title="@string/two_columns_title"
+                android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
             android:key="display"
             android:title="@string/display_label">
-
         <PreferenceScreen
                 android:key="brightness"
                 android:title="@string/brightness"

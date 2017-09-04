@@ -543,4 +543,6 @@
     <string name="recents_clear_all_location_bottom_left">Bottom left</string>
     <string name="recents_clear_all_location_bottom_center">Bottom center</string>
 
+    <string name="dashboard_title">Dashboard</string>
+ +  <string name="two_columns_title">Two columns</string>
 </resources>
