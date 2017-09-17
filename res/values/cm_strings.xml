@@ -522,4 +522,24 @@
     <string name="lockscreen_enable_power_menu_title">Secure lockscreen</string>
     <string name="lockscreen_enable_power_menu_summary">Prevent access to quick settings and power menu</string>
 
+    <!-- Recents -->
+    <string name="recents_label">Recents</string>
+    <string name="immersive_recents_title">Immersive mode</string>
+    <string name="immersive_recents_summary">Change the views in recents</string>
+    <string name="immersive_recents_dialog_title">Select recents views to hide</string>
+    <string name="immersive_recents_default">Hide nothing</string>
+    <string name="immersive_recents_fullscreen">Hide both</string>
+    <string name="immersive_recents_statusbar">Hide navigation bar</string>
+    <string name="immersive_recents_navbar">Hide status bar</string>
+    <string name="systemui_recents_mem_display_title">Memory bar</string>
+    <string name="systemui_recents_mem_display_summary">Display memory bar in recents</string>
+    <string name="recents_lock_icon_title">Lock task</string>
+    <string name="recents_lock_icon_summary">Show lock icon in the task header</string>
+    <string name="recents_dismiss_icon_title">Dismiss task</string>
+    <string name="recents_dismiss_icon_summary">Show dismiss icon in the task header</string>
+
+    <!-- QS easy toggles -->
+    <string name="qs_easy_toggle_title">Advanced Quick Setting easy toggle</string>
+    <string name="qs_easy_toggle_summary">one tap action to toggle bluetooth, data, or wifi</string>
+
 </resources>
