@@ -154,6 +154,11 @@
           android:key="volume_adjust_sounds_enabled"
           android:title="@string/volume_adjust_sounds_title" />
 
+        <!-- Screenshot sounds -->
+        <SwitchPreference
+          android:key="screenshot_sounds"
+          android:title="@string/screenshot_sound_title" />
+
         <!-- Dock speaker plays -->
         <DropDownPreference
           android:key="dock_audio_media"
