@@ -91,4 +91,11 @@
             android:title="@string/emergency_tone_title"
             android:summary="%s" />
 
+    <!-- Camera sounds -->
+    <SwitchPreference
+            android:key="camera_sounds"
+            android:title="@string/camera_sounds_title"
+            android:summary="@string/camera_sounds_summary"
+            android:defaultValue="true" />
+
 </PreferenceScreen>
