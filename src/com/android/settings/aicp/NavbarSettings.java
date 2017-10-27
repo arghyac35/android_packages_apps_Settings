@@ -25,6 +25,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.os.UserHandle;
 import android.support.v7.preference.ListPreference;
 import android.support.v14.preference.SwitchPreference;
@@ -33,6 +34,8 @@ import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
+import android.view.IWindowManager;
+import android.view.WindowManagerGlobal;
 
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.internal.logging.MetricsLogger;
@@ -45,6 +48,8 @@ import com.android.internal.utils.du.Config.ButtonConfig;
 import com.android.settings.aicp.preference.CustomSeekBarPreference;
 import com.android.settings.dashboard.SummaryLoader;
 import com.android.settings.R;
+
+import cyanogenmod.hardware.CMHardwareManager;
 
 public class NavbarSettings extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
@@ -69,6 +74,8 @@ public class NavbarSettings extends SettingsPreferenceFragment implements OnPref
     private CustomSeekBarPreference mBarHeightLand;
     private CustomSeekBarPreference mBarWidth;
 
+    private boolean mNavbarOptionVisible = true;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,11 +88,34 @@ public class NavbarSettings extends SettingsPreferenceFragment implements OnPref
         mFlingSettings = (PreferenceScreen) findPreference(KEY_FLING_NAVBAR_SETTINGS);
         mSmartbarSettings = (PreferenceScreen) findPreference(KEY_SMARTBAR_SETTINGS);
 
+        final PreferenceScreen prefScreen = getPreferenceScreen();
+        final CMHardwareManager hardware = CMHardwareManager.getInstance(getActivity());
+
+        // Only visible on devices that does not have a navigation bar already,
+        // and don't even try unless the existing keys can be disabled
+        boolean needsNavigationBar = false;
+        if (hardware.isSupported(CMHardwareManager.FEATURE_KEY_DISABLE)) {
+            try {
+                IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+                needsNavigationBar = wm.needsNavigationBar();
+            } catch (RemoteException e) {
+            }
+
+            if (needsNavigationBar) {
+                mNavbarOptionVisible = false;
+            }
+        } else {
+            mNavbarOptionVisible = false;
+        }
+
         boolean showing = Settings.Secure.getInt(getContentResolver(),
                 Settings.Secure.NAVIGATION_BAR_VISIBLE,
                 DUActionUtils.hasNavbarByDefault(getActivity()) ? 1 : 0) != 0;
         updateBarVisibleAndUpdatePrefs(showing);
         mNavbarVisibility.setOnPreferenceChangeListener(this);
+        if (!mNavbarOptionVisible) {
+            prefScreen.removePreference(mNavbarVisibility);
+        }
 
         int mode = Settings.Secure.getInt(getContentResolver(), Settings.Secure.NAVIGATION_BAR_MODE,
                 0);
@@ -126,9 +156,11 @@ public class NavbarSettings extends SettingsPreferenceFragment implements OnPref
     }
 
     private void updateBarVisibleAndUpdatePrefs(boolean showing) {
-        mNavbarVisibility.setChecked(showing);
-        mNavInterface.setEnabled(mNavbarVisibility.isChecked());
-        mNavGeneral.setEnabled(mNavbarVisibility.isChecked());
+        if (mNavbarOptionVisible) {
+            mNavbarVisibility.setChecked(showing);
+            mNavInterface.setEnabled(mNavbarVisibility.isChecked());
+            mNavGeneral.setEnabled(mNavbarVisibility.isChecked());
+        }
     }
 
     @Override
@@ -140,11 +172,13 @@ public class NavbarSettings extends SettingsPreferenceFragment implements OnPref
             updateBarModeSettings(mode);
             return true;
         } else if (preference.equals(mNavbarVisibility)) {
-            boolean showing = ((Boolean)newValue);
-            Settings.Secure.putInt(getContentResolver(), Settings.Secure.NAVIGATION_BAR_VISIBLE,
-                    showing ? 1 : 0);
-            updateBarVisibleAndUpdatePrefs(showing);
-            return true;
+            if (mNavbarOptionVisible) {
+                boolean showing = ((Boolean)newValue);
+                Settings.Secure.putInt(getContentResolver(), Settings.Secure.NAVIGATION_BAR_VISIBLE,
+                        showing ? 1 : 0);
+                updateBarVisibleAndUpdatePrefs(showing);
+                return true;
+            }
         } else if (preference == mBarHeightPort) {
             int val = (Integer) newValue;
             Settings.Secure.putIntForUser(getContentResolver(),
