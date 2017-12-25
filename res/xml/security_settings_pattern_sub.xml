@@ -75,6 +75,12 @@
         <cyanogenmod.preference.CMSecureSettingSwitchPreference
             android:key="lock_screen_blur_enabled"
             android:title="@string/lockscreen_blur_enabled_title"
-            cm:requiresConfig="@*android:bool/config_uiBlurEnabled" />
+            cm:requiresConfig="@*android:bool/config_uiBlurEnabled" /> 
+
+<cyanogenmod.preference.CMSecureSettingSwitchPreference
+          android:key="lockscreen_enable_power_menu"
+     android:title="@string/lockscreen_enable_power_menu_title"
+         android:summary="@string/lockscreen_enable_power_menu_summary"
+android:defaultValue="true" />
 
 </PreferenceScreen>
