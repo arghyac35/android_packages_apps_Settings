@@ -95,10 +95,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_WALLPAPER = "wallpaper";
     private static final String KEY_VR_DISPLAY_PREF = "vr_display_pref";
 
-    private static final String IMMERSIVE_RECENTS = "immersive_recents";
-    private ListPreference mImmersiveRecents;
-
     private Preference mFontSizePref;
+
     private TimeoutListPreference mScreenTimeoutPreference;
     private ListPreference mNightModePreference;
     private Preference mScreenSaverPreference;
@@ -271,13 +269,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             mNightModePreference.setValue(String.valueOf(currentNightMode));
             mNightModePreference.setOnPreferenceChangeListener(this);
         }
-
-       mImmersiveRecents = (ListPreference) findPreference(IMMERSIVE_RECENTS);
-        mImmersiveRecents.setValue(String.valueOf(Settings.System.getInt(
-                resolver, Settings.System.IMMERSIVE_RECENTS, 0)));
-        mImmersiveRecents.setSummary(mImmersiveRecents.getEntry());
-        mImmersiveRecents.setOnPreferenceChangeListener(this);
-
     }
 
     private static boolean allowAllRotations(Context context) {
@@ -468,13 +459,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                 Log.e(TAG, "could not persist night mode setting", e);
             }
         }
-
-        if (preference == mImmersiveRecents) {
-			int value = Integer.parseInt((String) objValue);
-			int index = mImmersiveRecents.findIndexOfValue((String) objValue);
-            Settings.System.putInt(getContentResolver(), 
-                    Settings.System.IMMERSIVE_RECENTS, value);
-            mImmersiveRecents.setSummary(mImmersiveRecents.getEntries()[index]);
         return true;
     }
 
