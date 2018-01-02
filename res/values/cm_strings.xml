@@ -526,10 +526,6 @@
     <string name="recents_label">Recents</string>
     <string name="systemui_recents_mem_display_title">Memory bar</string>
     <string name="systemui_recents_mem_display_summary">Display memory bar in recents</string>
-    <string name="recents_lock_icon_title">Lock task</string>
-    <string name="recents_lock_icon_summary">Show lock icon in the task header</string>
-    <string name="recents_dismiss_icon_title">Dismiss task</string>
-    <string name="recents_dismiss_icon_summary">Show dismiss icon in the task header</string>
 
     <!-- QS easy toggles -->
     <string name="miscellaneous_label">Miscellaneous</string>
