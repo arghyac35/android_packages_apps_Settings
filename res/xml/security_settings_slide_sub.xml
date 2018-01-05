@@ -57,10 +57,4 @@
             android:title="@string/lockscreen_blur_enabled_title"
             cm:requiresConfig="@*android:bool/config_uiBlurEnabled" />
 
-        <cyanogenmod.preference.CMSecureSettingSwitchPreference
-            android:key="qs_easy_toggle"
-            android:title="@string/qs_easy_toggle_title"
-            android:summary="@string/qs_easy_toggle_summary"
-            android:defaultValue="false" />
-
 </PreferenceScreen>
