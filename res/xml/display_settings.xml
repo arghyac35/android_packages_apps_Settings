@@ -21,27 +21,6 @@
         settings:keywords="@string/keywords_display">
 
     <PreferenceCategory
-            android:title="@string/recents_label">
-
-        <com.android.settings.preference.SystemSettingSwitchPreference
-                 android:key="systemui_recents_mem_display"
-                 android:title="@string/systemui_recents_mem_display_title"
-                 android:summary="@string/systemui_recents_mem_display_summary"
-                 android:defaultValue="false" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/dashboard_title">
-
-        <com.android.settings.preference.SystemSettingSwitchPreference
-                android:key="two_columns"
-                android:title="@string/two_columns_title"
-                android:defaultValue="false" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
             android:key="display"
             android:title="@string/display_label">
         <PreferenceScreen
@@ -197,6 +176,27 @@
                 android:key="vr_display_pref"
                 android:summary="%s"
                 android:title="@string/display_vr_pref_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="@string/recents_label">
+
+        <com.android.settings.preference.SystemSettingSwitchPreference
+                 android:key="systemui_recents_mem_display"
+                 android:title="@string/systemui_recents_mem_display_title"
+                 android:summary="@string/systemui_recents_mem_display_summary"
+                 android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/dashboard_title">
+
+        <com.android.settings.preference.SystemSettingSwitchPreference
+                android:key="two_columns"
+                android:title="@string/two_columns_title"
+                android:defaultValue="false" />
 
     </PreferenceCategory>
 
