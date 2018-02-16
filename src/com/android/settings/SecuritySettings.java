@@ -149,6 +149,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
     private SwitchPreference mShowPassword;
 
     private SwitchPreference mFingerprintVib;
+    private FingerprintManager mFingerprintManager;
 
     private KeyStore mKeyStore;
     private RestrictedPreference mResetCredentials;
@@ -244,6 +245,8 @@ public class SecuritySettings extends SettingsPreferenceFragment
         }
         addPreferencesFromResource(R.xml.security_settings);
         root = getPreferenceScreen();
+
+        mFingerprintManager = (FingerprintManager) getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
 
         // Add options for lock/unlock screen
         final int resid = getResIdForLockUnlockScreen(getActivity(), mLockPatternUtils,
@@ -390,16 +393,14 @@ public class SecuritySettings extends SettingsPreferenceFragment
                     getResources().getString(R.string.switch_on_text));
         }
 
-        FingerprintManager fpm =
-                (FingerprintManager) getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
         mFingerprintVib = (SwitchPreference) findPreference(FINGERPRINT_VIB);
         if (mFingerprintVib !=null) {
-            if (fpm != null && fpm.isHardwareDetected()){
+            if (mFingerprintManager.isHardwareDetected()){
                 mFingerprintVib.setChecked((Settings.System.getInt(getContentResolver(),
                         Settings.System.FINGERPRINT_SUCCESS_VIB, 1) == 1));
                 mFingerprintVib.setOnPreferenceChangeListener(this);
             } else {
-                securityCategory.removePreference(mFingerprintVib);
+                root.removePreference(mFingerprintVib);
             }
         }
 
